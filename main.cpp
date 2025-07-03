@@ -1,8 +1,7 @@
 #include <iostream>
 #include <string>
-#include <cstdlib>
-#include <ctime>
 #include <fstream>
+#include <sstream>
 
 using namespace std;
 
@@ -17,11 +16,11 @@ public:
             returnPassword += to_string(password[i]);
         }
 
+        cout << "Registration Code: ";
         for (int i = 0; i < 6; i++) {
-            cout << password[i] << " ";
+            cout << password[i];
         }
         cout << endl;
-
         return returnPassword;
     }
 };
@@ -36,6 +35,7 @@ int main() {
     generatenum g;
 
     string generatedCode = g.computerGeneratedPassword();
+
     while (running) {
         cout << "1. Login\n";
         cout << "2. Sign up\n";
@@ -44,36 +44,64 @@ int main() {
         cin >> choice;
 
         if (choice == 1) {
-            cout << "--- Login ---\n";
+            cout << "Login\n";
             cout << "Enter your email: ";
             cin >> email;
             cout << "Enter your password: ";
             cin >> password;
-            cout << "Attempting to log in...\n";
+
+            ifstream file("data.csv");
+            string line;
+            bool loggedIn = false;
+
+            while (getline(file, line)) {
+                stringstream ss(line);
+                string file_email, file_password, file_username;
+                getline(ss, file_email, ',');
+                getline(ss, file_password, ',');
+                getline(ss, file_username, ',');
+                if (file_email == email && file_password == password) {
+                    loggedIn = true;
+                    cout << "Welcome myfriend  " << file_username << "\n";
+                    break;
+                }
+            }
+            file.close();
+
+            if (!loggedIn) {
+                cout << "wrong password gang.\n";
+            }
+
         } else if (choice == 2) {
-            cout << "--- Sign Up ---\n";
-            cout << "Enter your email: ";
+            cout << "sign up\n";
+            cout << "enter your email: ";
             cin >> email;
-            cout << "Enter your password: ";
+            cout << "enter your password: ";
             cin >> password;
-            cout << "Re-enter your password: ";
+            cout << "enter your password again: ";
             cin >> re_entered_password;
-            cout << "Enter a username: ";
+            cout << "enter a username: ";
             cin >> username;
-            cout << "Enter the registration code: ";
+            cout << "enter the registration code: ";
             cin >> code;
-            cout << "Attempting to sign up...\n";
 
-            if (code == generatedCode ) {
+            if (password != re_entered_password) {
+                cout << "passwords do not match.\n";
+            } else if (code == generatedCode) {
+                ofstream file("data.csv", ios::app);
+                file << email << "," << password << "," << username << "\n";
+                file.close();
+                cout << "sign up successful.\n";
 
+                generatedCode = g.computerGeneratedPassword();
             } else {
-                cout << " Wrong information";
+                cout << "wrong information.\n";
             }
         } else if (choice == 3) {
             running = false;
-            cout << "Exiting program.\n";
+            cout << "exiting program.\n";
         } else {
-            cout << "Invalid choice. Please try again.\n";
+            cout << "invalid choice. Please try again.\n";
         }
         cout << "\n";
     }
