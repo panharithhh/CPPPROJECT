@@ -72,6 +72,10 @@ int main() {
                 cout << "wrong password gang.\n";
             }
 
+            if (loggedIn) {
+                // nai eang's code
+            }
+
         } else if (choice == 2) {
             cout << "sign up\n";
             cout << "enter your email: ";
