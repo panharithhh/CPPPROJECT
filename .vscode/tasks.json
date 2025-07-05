@@ -1,0 +1,34 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build stock management",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "main.cpp",
+                "product.cpp",
+                "-o",
+                "stock_management"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "type": "java (build)",
+            "paths": [
+                "${workspace}"
+            ],
+            "isFullBuild": true,
+            "group": "build",
+            "problemMatcher": [],
+            "label": "java (build): Build Workspace",
+            "detail": "$(tools) Build all the Java projects in workspace."
+        }
+    ]
+}
