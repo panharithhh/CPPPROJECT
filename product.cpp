@@ -155,7 +155,6 @@ void Stock::loadStock(){
         getline(ss, quantityStr, ',');
         getline(ss, category, ',');
 
-        // Use the silent _addProduct to add to the linked list without printing or saving
         _addProduct(stoi(idStr), name, stod(priceStr), stoi(quantityStr), category);
     }
     file.close();
@@ -181,7 +180,7 @@ void Stock::searchProduct(int id){
                  << setw(15) << current->category
                  << endl;
             cout << "-----------------------------------------------------------------------------\n";
-            break; // Found the product, no need to search further
+            break; 
         }
         current = current->next;
     }
@@ -234,7 +233,7 @@ void Stock::sortByName() {
         last = current;
     } while (swapped);
 
-    saveStock(); // Save the sorted list to the file
+    saveStock();
 }
 
 void Stock::saveStock(){
@@ -244,7 +243,7 @@ void Stock::saveStock(){
         return;
     }
 
-    outFile << "ID,Name,Price,Quantity,Category\n"; // Write header
+    outFile << "ID,Name,Price,Quantity,Category\n";
     Product* current = head;
     while (current != nullptr) {
         outFile << current->id << ',' << current->name << ',' << current->price << ',' << current->quantity << ',' << current->category << '\n';
