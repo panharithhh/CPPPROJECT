@@ -19,6 +19,8 @@ class Stock{
     private:
         Product* head;
         Product* tail;
+        void swapProductData(Product* a, Product* b);
+    void _addProduct(int id, string name, double price, int quantity, string category);
 
     public:
         Stock(); //Constructor 
@@ -29,6 +31,9 @@ class Stock{
         void updateProduct(int id);
         void deleteProduct(int id);
         void searchProduct(int id);
+        void sortByName();
+        void loadStock();
+        void saveStock();
 
 };
 
